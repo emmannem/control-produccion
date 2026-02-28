@@ -13,7 +13,8 @@ export class App {
   protected readonly title = signal('control-produccion-v1.0');
 
   // Crear objeto orden de tipo OrdenProduccion
-  orden = new OrdenProduccion(1, 'Tornillo Industrial', 300, 500);
+  orden = new OrdenProduccion(1, 'Tornillo Industrial', 300, 500, true); //Esta en mantenimiento
+
   mensaje = '';
 
   iniciarOrden() {
