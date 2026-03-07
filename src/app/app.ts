@@ -12,35 +12,46 @@ import { OrdenProduccion } from './models/orden-produccion.model';
 })
 export class App {
   // Variable reactiva que Angular actualizará automáticamente si cambia.
-  protected readonly title = signal('control-produccion-v1.0');
+  // protected readonly title = signal('control-produccion-v1.0');
 
-  orden: OrdenProduccion;
-  mensaje = '';
+  ordenes: OrdenProduccion[] = [];
   nuevaCantidad = 0;
 
   constructor(private ordenService: OrdenService) {
-    this.orden = this.ordenService.getOrden();
+    this.ordenes = this.ordenService.getOrdenes();
   }
 
-  iniciar() {
+  iniciar(orden: OrdenProduccion) {
+    orden.mensaje = '';
     try {
-      this.ordenService.iniciarOrden();
-      this.mensaje = 'Orden iniciada correctamente';
+      this.ordenService.iniciarOrden(orden);
+      orden.mensaje = 'Orden iniciada correctamente';
     } catch (error: any) {
-      this.mensaje = error.message;
+      orden.mensaje = error.message;
     }
   }
 
-  finalizar() {
+  finalizar(orden: OrdenProduccion) {
+    orden.mensaje = '';
     try {
-      this.ordenService.finalizarOrden();
-      this.mensaje = 'Orden finalizada correctamente';
+      this.ordenService.finalizarOrden(orden);
+      orden.mensaje = 'Orden finalizada correctamente';
     } catch (error: any) {
-      this.mensaje = error.message;
+      orden.mensaje = error.message;
     }
   }
 
-  actualizarCantidad() {
+  /* actualizarCantidad() {
     this.orden.cantidad = this.nuevaCantidad;
-  }
+  } */
+
+  /*  
+ 
+ // No es necesario el metodo Angular actualiza 
+ // automáticamente el modelo cuando el usuario 
+ // cambia el valor del input con two-way binding
+ 
+ actualizarCantidad(orden: OrdenProduccion) {
+    orden.cantidad = this.nuevaCantidad;
+  } */
 }

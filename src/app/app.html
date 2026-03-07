@@ -1,17 +1,17 @@
 <div class="container mt-5">
-  <div class="card shadow">
-    <div class="card-header bg-primary text-white">Sistema de Orden de Producción</div>
+  <h2 class="mb-4">Órdenes de Producción</h2>
 
+  <div class="card mb-3 shadow" *ngFor="let orden of ordenes">
+    <div class="card-header bg-primary text-white">
+      {{ orden.producto }}
+    </div>
     <div class="card-body">
-      <!-- Interpolación -->
-      <h4>{{ orden.producto }}</h4>
+      <p>Cantidad: {{ orden.cantidad }}</p>
+      <p>Capacidad: {{ orden.capacidadMaquina }}</p>
 
-      <p>Cantidad actual: {{ orden.cantidad }}</p>
-      <p>Capacidad máquina: {{ orden.capacidadMaquina }}</p>
-
-      <!-- Property Binding -->
       <p>
         Estado:
+
         <span
           class="badge"
           [ngClass]="{
@@ -24,37 +24,42 @@
         </span>
       </p>
 
-      <!-- Two-way Binding -->
-      <div class="mb-3">
-        <label>Nueva Cantidad</label>
-        <input type="number" class="form-control" [(ngModel)]="nuevaCantidad" />
-      </div>
-
-      <button class="btn btn-info me-2" (click)="actualizarCantidad()">Actualizar Cantidad</button>
-
-      <!-- Event Binding -->
-      <button class="btn btn-success me-2" (click)="iniciar()">Iniciar</button>
-
-      <button
-        class="btn btn-danger"
-        [disabled]="orden.estado !== 'en_proceso'"
-        (click)="finalizar()"
-      >
-        Finalizar
-      </button>
-
-      <!-- Implementación del bloque de control dee flujo @if-->
-      @if (mensaje) {
-        <div class="alert alert-warning mt-3">
-          {{ mensaje }}
-        </div>
-      }
-
-      <!-- Uso de método del modelo -->
-      <p class="mt-3">
+      <p>
         Eficiencia:
         <strong>{{ orden.obtenerEficiencia() }}</strong>
       </p>
+
+      <!-- Two-Way Binding directo -->
+      <label class="form-label">Modificar cantidad</label>
+
+      <input type="number" class="form-control mb-2" [(ngModel)]="orden.cantidad" />
+
+      <div class="progress mb-2">
+        <div
+          class="progress-bar"
+          [style.width.%]="orden.obtenerPorcentajeUso()"
+          [ngClass]="{
+            'bg-success': orden.obtenerPorcentajeUso() < 80,
+            'bg-danger': orden.obtenerPorcentajeUso() >= 80,
+          }"
+        >
+          {{ orden.obtenerPorcentajeUso() | number: '1.0-0' }}%
+        </div>
+      </div>
+
+      <button class="btn btn-success me-2" (click)="iniciar(orden)">Iniciar</button>
+
+      <!--     <button class="btn btn-info me-2" (click)="actualizarCantidad(orden)">
+        Actualizar Cantidad
+      </button> -->
+
+      <button class="btn btn-danger me-2" (click)="finalizar(orden)">Finalizar</button>
+      <!-- Implementación del bloque de control dee flujo @if-->
+      @if (orden.mensaje) {
+        <div class="alert alert-warning mt-3">
+          {{ orden.mensaje }}
+        </div>
+      }
     </div>
   </div>
 </div>

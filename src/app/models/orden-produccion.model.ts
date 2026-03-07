@@ -2,6 +2,7 @@
 export type EstadoOrden = 'pendiente' | 'en_proceso' | 'finalizada';
 
 export class OrdenProduccion {
+  mensaje: string = '';
   constructor(
     public id: number,
     public producto: string,
@@ -55,5 +56,9 @@ export class OrdenProduccion {
     }
 
     return 'Alta';
+  }
+
+  obtenerPorcentajeUso(): number {
+    return (this.cantidad / this.capacidadMaquina) * 100;
   }
 }

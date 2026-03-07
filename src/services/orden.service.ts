@@ -6,17 +6,24 @@ import { OrdenProduccion } from '../app/models/orden-produccion.model';
 })
 export class OrdenService {
   // Crear objeto orden de tipo OrdenProduccion
-  private orden = new OrdenProduccion(1, 'Tornillo Industrial', 450, 500, false);
+  // private orden = new OrdenProduccion(1, 'Tornillo Industrial', 450, 500, false);
 
-  getOrden(): OrdenProduccion {
-    return this.orden;
+  private ordenes: OrdenProduccion[] = [
+    new OrdenProduccion(1, 'Tornillo Industrial', 200, 500, false),
+    new OrdenProduccion(2, 'Tuerca Industrial', 450, 500, false),
+    new OrdenProduccion(3, 'Arandela', 600, 500, false),
+    new OrdenProduccion(4, 'Perno', 150, 500, true),
+  ];
+
+  getOrdenes(): OrdenProduccion[] {
+    return this.ordenes;
   }
 
-  iniciarOrden(): void {
-    this.orden.iniciar();
+  iniciarOrden(orden: OrdenProduccion): void {
+    orden.iniciar();
   }
 
-  finalizarOrden(): void {
-    this.orden.finalizar();
+  finalizarOrden(orden: OrdenProduccion): void {
+    orden.finalizar();
   }
 }
