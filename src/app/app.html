@@ -43,10 +43,12 @@
         Finalizar
       </button>
 
-      <!-- Directiva estructural -->
-      <div *ngIf="mensaje" class="alert alert-warning mt-3">
-        {{ mensaje }}
-      </div>
+      <!-- Implementación del bloque de control dee flujo @if-->
+      @if (mensaje) {
+        <div class="alert alert-warning mt-3">
+          {{ mensaje }}
+        </div>
+      }
 
       <!-- Uso de método del modelo -->
       <p class="mt-3">
